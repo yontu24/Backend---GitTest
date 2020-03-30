@@ -1,0 +1,6 @@
+				C#
+Visual Studio Code C#
+	https://code.visualstudio.com/docs/languages/csharp
+Visual Studio C#
+	https://docs.microsoft.com/en-us/visualstudio/get-started/csharp/?view=vs-2019
+-----------------------------------------------------------------------
