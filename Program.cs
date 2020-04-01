@@ -24,60 +24,60 @@ namespace IP
         int PlayerType;
         
 
-        public Player(string name)
+        private Player(string name)
         {
             Nickname = name;
             ID++;
 
         }
 
-        public int DiceRoll()
+        private int DiceRoll()
         {
             Random dice = new Random();
             return dice.Next(1, 12);
         }
 
-        public void PlayDevelopmentCard(int type)
+        private void PlayDevelopmentCard(int type)
         {
             //play(type);
         }
 
-        public void EndTurn()
+        private void EndTurn()
         {
             //player endTurn();
         }
 
-        public void TradeWithPlayer(int id)
+        private void TradeWithPlayer(int id)
         {
             //trade(id);
         }
 
-        public void TradeWithBand()
+        private void TradeWithBand()
         {
             //TradeWithBand();
         }
 
-        public bool BuyDevelopmentCard()
+        private bool BuyDevelopmentCard()
         {
             //check for resources;
             //BuyDevelopmentCard();
             return true;
         }
 
-        public bool Build(int type)
+        private bool Build(int type)
         {
             //build(type);
             return true;
         }
 
-        public bool CheckForPort()
+        private bool CheckForPort()
         {
             //ChekcForPort
             //update player bank ratio
             return true;
         }
 
-        public bool TradeAccept()
+        private bool TradeAccept()
         {
             return true;
         }
