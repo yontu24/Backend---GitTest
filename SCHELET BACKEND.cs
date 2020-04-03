@@ -15,13 +15,14 @@ namespace schelet_backend
 
     enum Resources
     {
-        Wheat,
-        Sheep,
-        Clay,
-        Stone,
-        Wood,
-        Desert,
-        Ocean
+        Wheat = 4,
+        Sheep = 4,
+        Wood = 4,
+        Clay = 3,
+        Stone = 3,
+        Desert = 1,
+        Ocean,
+        None
     }
 
     enum Settlements
@@ -72,6 +73,7 @@ namespace schelet_backend
         public int number { get; set; }
         public bool hasRobber { get; set; }
         public List<Node> nodeNeighbors { get; set; }
+      //public List<Hex> hexNeighbors { get; set; } 
 
 
         public Hex(int id, Resources resource, int number)
@@ -108,6 +110,11 @@ namespace schelet_backend
         private void initNodes()
         {
             //loop 1..54 generare cu constructorul doar cu id, restul se intampla in connect
+            for(int i = 1; i <= 54; i++)
+            {
+                Node item = new Node(i);
+                nodes.Add(item);
+            }
         }
 
         //create all new hexes, add to list
@@ -117,8 +124,87 @@ namespace schelet_backend
             //genererare RELEVANTA, CU CAP a resursa, numar -> apelare constructor cu toate
 
             //for loop 1..18 hexurile cu ocean de pe exterior -> folosire constructor doar cu id
+            
+            int clay = 0, wood = 0, wheat = 0, sheep = 0, stone = 0, desert = 0;
+            int[] tokens = new int[12];
+            
+            tokens[2] = 1;
+            tokens[12] = 1;
 
-            //
+            for(int i = 2; i <= 12; i++)
+            {
+                tokens[i] = 2;
+            }
+
+            int rand = Random.Range(2, 13);
+            int randomToken = tokens[rand];
+            tokens[rand]--;
+
+            //Hex hexItem = new Hex(0, Resources.None, 0);
+
+            for (int i = 1; i <= 19; i++)
+            {
+                
+                var values = Enum.GetValues(typeof(Resources));
+                Resources randomResource = (Resources)values[Random.Range(0, values.Length)];
+
+               
+                while(randomToken == 0)
+                {
+                    rand = Random.Range(2, 13);
+                    randomToken = tokens[rand];
+                 
+                }
+                tokens[rand]--;
+
+                switch (randomResource)
+                {
+                    case Resources.Clay: if(++clay < (int)Resources.Clay)
+                        {   
+                        
+                            Hex hexItem = new Hex(i, randomResource, randomToken);
+                            
+                        }
+
+                    case Resources.Wheat:
+                        if (++wheat < (int)Resources.Wheat)
+                        {
+                            Hex hexItem = new Hex(i, randomResource, randomToken);
+                        }
+
+                    case Resources.Wood:
+                        if (++wood < (int)Resources.Wood)
+                        {
+                            Hex hexItem = new Hex(i, randomResource, randomToken);
+                        }
+
+                    case Resources.Stone:
+                        if (++stone < (int)Resources.Stone)
+                        {
+                            Hex hexItem = new Hex(i, randomResource, randomToken);
+                        }
+
+                    case Resources.Sheep:
+                        if (++sheep < (int)Resources.Sheep)
+                        {
+                            Hex hexItem = new Hex(i, randomResource, randomToken);
+                        }
+                    case Resources.Desert:
+                        if (++desert < (int)Resources.Desert)
+                        {
+                            Hex hexItem = new Hex(i, randomResource, randomToken);
+                        }
+                }
+             
+            }
+
+            foreach(Hex item in hexes)
+            {
+                if(item.number == 6 || item.number == 8)
+                {
+
+                }
+            }
 
         }
 
