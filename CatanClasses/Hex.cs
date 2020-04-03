@@ -24,9 +24,29 @@ namespace Catanv3
         public Hex(int id)
         {
             this.id = id;
-            this.resource = Resources.Ocean;
-            this.number = -1;
-            this.hasRobber = false;
+        }
+
+        public void setDetails(Resources resource, int number)
+        {
+            this.resource = resource;
+            this.number = number;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder final = new StringBuilder();
+            final.Append("Hex ID: " + id.ToString() + ", resource: " + Resource.ToString() + ", number: " + Number.ToString());
+            final.Append(", Neighbors: ");
+
+            StringBuilder neighbors = new StringBuilder();
+            foreach (Hex hex in HexNeighbors)
+            {
+                neighbors.Append(hex.Id.ToString() + ", ");
+            }
+
+            final.Append(neighbors);
+
+            return final.ToString();
         }
         public int Id
         {
@@ -74,6 +94,10 @@ namespace Catanv3
             get
             {
                 return this.hexNeighbors;
+            }
+            set
+            {
+                this.hexNeighbors = value;
             }
         }
 
