@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
+using Catanv3;
 
 namespace Catanv3
 {
     class Map
     {
         private List<Node> nodes = new List<Node>();
-
+        private List<Hex> hexes = new List<Hex>();
+        private static List<Resources> resourceTiles = new List<Resources>() {Resources.Desert, Resources.Clay, Resources.Clay, Resources.Clay, Resources.Wood, Resources.Wood, Resources.Wood, Resources.Wood, Resources.Stone, Resources.Stone, Resources.Stone, Resources.Sheep, Resources.Sheep, Resources.Sheep, Resources.Sheep, Resources.Wheat, Resources.Wheat, Resources.Wheat, Resources.Wheat};
         public List<Node> Nodes
         {
             get
@@ -15,7 +18,6 @@ namespace Catanv3
                 return this.nodes;
             }
         }
-        private List<Hex> hexes = new List<Hex>();
 
         public List<Hex> Hexes
         {
@@ -25,9 +27,17 @@ namespace Catanv3
         public Map()
         {
             initHexes();
-            initNodes();
-            connect();
-            makePorts();
+            hexesToHexesNbors();
+            generateHexDetails();
+
+            foreach (Hex hex in hexes)
+            {
+                Console.WriteLine(hex.ToString());
+            }
+
+            // initNodes();
+            // hexesToNodesNbors();
+            // makePorts();
         }
 
         //create all new nodes, add to list
@@ -40,175 +50,117 @@ namespace Catanv3
                 nodes.Add(item);
             }
         }
-
-        //create all new hexes, add to list
         private void initHexes()
         {
-            //for loop 1..19 hexurile cu resurse pe ele
-            //genererare RELEVANTA, CU CAP a resursa, numar -> apelare constructor cu toate
-
-            //for loop 1..18 hexurile cu ocean de pe exterior -> folosire constructor doar cu id
-
-            int clay = 0, wood = 0, wheat = 0, sheep = 0, stone = 0, desert = 0;
-            int[] tokens = new int[13];
-
-            tokens[2] = 1;
-            tokens[12] = 1;
-
-            for (int i = 2; i <= 12; i++)
+            hexes.Add(new Hex(-1000));
+            for (int i = 1; i <= 19; i++) 
             {
-                tokens[i] = 2;
+                Hex hex = new Hex(i);
+                hexes.Add(hex);
             }
-
-            Random rand = new Random();
-
-            int ind = rand.Next(2, 13);
-            int randomToken = tokens[ind];
-            tokens[ind]--;
-
-            //Hex hexItem = new Hex(0, Resources.None, 0);
-
-            for (int i = 1; i <= 19; i++)
-            {
-
-                //var values = Enum.GetValues(typeof(Resources));
-                List<String> resources = new List<String>() { "Wheat", "Sheep", "Wood", "Clay", "Desert" };
-
-                String randomResource = resources[rand.Next(0, resources.Count)];
-
-                while (randomToken == 0)
-                {
-                    ind = rand.Next(2, 13);
-                    randomToken = tokens[ind];
-
-                }
-                tokens[ind]--;
-
-                bool generated = false;
-
-                while (!generated)
-                {
-                    switch (randomResource)
-                    {
-                        case "Clay":
-                            if (++clay < (int)Resources.Clay)
-                            {
-                                Hex hexItem = new Hex(i, Resources.Clay, randomToken);
-                                generated = true;
-                            }
-                            else
-                            {
-                                randomResource = resources[rand.Next(0, resources.Count)];
-                            }
-                            break;
-
-                        case "Wheat":
-                            if (++wheat < (int)Resources.Wheat)
-                            {
-                                Hex hexItem = new Hex(i, Resources.Wheat, randomToken);
-                                generated = true;
-                            }
-                            else
-                            {
-                                randomResource = resources[rand.Next(0, resources.Count)];
-                            }
-                            break;
-
-
-                        case "Wood":
-                            if (++wood < (int)Resources.Wood)
-                            {
-                                Hex hexItem = new Hex(i, Resources.Wood, randomToken);
-                                generated = true;
-                            }
-                            else
-                            {
-                                randomResource = resources[rand.Next(0, resources.Count)];
-                            }
-                            break;
-
-                        case "Stone":
-                            if (++stone < (int)Resources.Stone)
-                            {
-                                Hex hexItem = new Hex(i, Resources.Stone, randomToken);
-                                generated = true;
-                            }
-                            else
-                            {
-                                randomResource = resources[rand.Next(0, resources.Count)];
-                            }
-                            break;
-
-                        case "Sheep":
-                            if (++sheep < (int)Resources.Sheep)
-                            {
-                                Hex hexItem = new Hex(i, Resources.Sheep, randomToken);
-                                generated = true;
-                            }
-                            else
-                            {
-                                randomResource = resources[rand.Next(0, resources.Count)];
-                            }
-                            break;
-
-                        case "Desert":
-                            if (++desert < (int)Resources.Desert)
-                            {
-                                Hex hexItem = new Hex(i, Resources.Desert, randomToken);
-                                generated = true;
-                            }
-                            else
-                            {
-                                randomResource = resources[rand.Next(0, resources.Count)];
-                            }
-                            break;
-
-                        default:
-                            Console.WriteLine("eraore");
-                            break;
-                    }
-                }
-
-            }
-
-
-            //oceane exterioare
             for (int i = 1; i <= 18; i++)
             {
-                hexes.Add(new Hex(0 - i));
+                Hex hex = new Hex(0 - i);
+                hexes.Add(hex);
+            }
+        }
+
+        private void hexesToHexesNbors() 
+        {
+            hexes[1].HexNeighbors = new List<Hex> {hexes[20], hexes[21], hexes[37], hexes[2], hexes[5], hexes[4]};
+            hexes[2].HexNeighbors = new List<Hex> {hexes[21], hexes[22], hexes[1], hexes[5], hexes[6], hexes[3]};
+            hexes[3].HexNeighbors = new List<Hex> {hexes[22], hexes[23], hexes[24], hexes[6], hexes[7], hexes[2]};
+            hexes[4].HexNeighbors = new List<Hex> {hexes[36], hexes[37], hexes[5], hexes[8], hexes[1], hexes[9]};
+            hexes[5].HexNeighbors = new List<Hex> {hexes[1], hexes[2], hexes[6], hexes[10], hexes[9], hexes[4]};
+            hexes[6].HexNeighbors = new List<Hex> {hexes[2], hexes[3], hexes[5], hexes[7], hexes[10], hexes[11]};
+            hexes[7].HexNeighbors = new List<Hex> {hexes[3], hexes[6], hexes[11], hexes[12], hexes[24], hexes[25]};
+            hexes[8].HexNeighbors = new List<Hex> {hexes[34], hexes[35], hexes[36], hexes[4], hexes[9], hexes[13]};
+            hexes[9].HexNeighbors = new List<Hex> {hexes[4], hexes[5], hexes[8], hexes[10], hexes[13], hexes[14]};
+            hexes[10].HexNeighbors = new List<Hex> {hexes[5], hexes[6], hexes[11], hexes[9], hexes[14], hexes[15]};
+            hexes[11].HexNeighbors = new List<Hex> {hexes[6], hexes[7], hexes[12], hexes[16], hexes[15], hexes[10]};
+            hexes[12].HexNeighbors = new List<Hex> {hexes[25], hexes[26], hexes[27], hexes[7], hexes[11], hexes[16]};
+            hexes[13].HexNeighbors = new List<Hex> {hexes[33], hexes[34], hexes[8], hexes[9], hexes[14], hexes[17]};
+            hexes[14].HexNeighbors = new List<Hex> {hexes[9], hexes[10], hexes[15], hexes[18], hexes[17], hexes[13]};
+            hexes[15].HexNeighbors = new List<Hex> {hexes[10], hexes[11], hexes[16], hexes[19], hexes[18], hexes[14]};
+            hexes[16].HexNeighbors = new List<Hex> {hexes[27], hexes[28], hexes[11], hexes[12], hexes[15], hexes[19]};
+            hexes[17].HexNeighbors = new List<Hex> {hexes[32], hexes[33], hexes[31], hexes[13], hexes[14], hexes[18]};
+            hexes[18].HexNeighbors = new List<Hex> {hexes[30], hexes[31], hexes[17], hexes[14], hexes[15], hexes[19]};
+            hexes[19].HexNeighbors = new List<Hex> {hexes[28], hexes[29], hexes[30], hexes[15], hexes[16], hexes[18]}; 
+        }
+
+
+
+        private void generateHexDetails() 
+        {
+            //List<Resources> resourceTiles = new List<Resources>() {Resources.Desert, Resources.Clay, Resources.Clay, Resources.Clay, Resources.Wood, Resources.Wood, Resources.Wood, Resources.Wood, Resources.Stone, Resources.Stone, Resources.Stone, Resources.Sheep, Resources.Sheep, Resources.Sheep, Resources.Sheep, Resources.Wheat, Resources.Wheat, Resources.Wheat, Resources.Wheat};
+            List<int> numberPieces = new List<int>() {2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12};
+
+            //oceans
+            for (int i = 20; i <= 37; i++)
+            {
+                hexes[i].setDetails(Resources.Ocean, -1);
             }
 
-            foreach (Hex hex in hexes)
+            List<Resources> shuffledTiles = Shuffler.Shuffle(resourceTiles);
+            foreach (Resources tile in shuffledTiles)
             {
-                Console.WriteLine(hex);
+                Console.WriteLine(tile.ToString());
             }
-
-            foreach (Hex item in hexes)
+            List<int> shuffledNumberPiecesNo68 = Shuffler.Shuffle(numberPieces).FindAll(e => e != 6 && e != 8);
+            for (int i = 0; i < shuffledNumberPiecesNo68.Count; i++)
             {
-                if (item.number == 6 || item.number == 8)
+                Console.Write(shuffledNumberPiecesNo68[i].ToString() + " ");
+            }
+            Console.WriteLine();
+
+            //tiles that are not deserts will have numbers on them
+            List<Hex> possibilities = new List<Hex>();
+
+            //randomize the resource tiles on the map
+            for (int i = 0; i < 19; i++)
+            {
+                hexes[i+1].Resource = shuffledTiles[i];
+                hexes[i+1].Number = 0;
+
+                if (hexes[i+1].Resource != Resources.Desert)
                 {
-
+                    //tiles that are not deserts will have numbers on them
+                    possibilities.Add(hexes[i+1]);
+                }
+                else
+                {
+                    hexes[i].Number = 7;
                 }
             }
 
+
+            List<int> toPlace = new List<int>() {6, 6, 8, 8};
+            Random rnd = new Random();
+
+            for (int i = 0; i < toPlace.Count; i++)
+            {
+                Hex pos = possibilities[rnd.Next(possibilities.Count)];
+                pos.Number = toPlace[i];
+                //Console.WriteLine(pos.ToString());
+                //possibilities = possibilities.FindAll(hex => !(hex.HexNeighbors.Contains(hex)) || !(hex == pos)  !(hex.Resource == Resources.Desert));
+                possibilities = possibilities.Where(hex => hex.Resource != Resources.Desert)
+                                             .Where(hex => !(hex.HexNeighbors.Contains(pos)))
+                                             .Where(hex => hex != pos)
+                                             .ToList();
+            }
+
+            for (int i = 0; i < 19; i++)
+            {
+                if (hexes[i+1].Resource != Resources.Desert && hexes[i+1].Number == 0)
+                {
+                    hexes[i+1].Number = shuffledNumberPiecesNo68[0];
+                    shuffledNumberPiecesNo68.RemoveAt(0);
+                }
+            }
         }
 
         //populate lists of neighbors in each
-        private void connect()
-        {
-            //parcurgere lista de hexuri
-            //hex 1 . setlistavecininoduri(new list {1, 2, 3, 9, 10, 11 } etc
 
-            //parcurgere lista de noduri
-            //nod1 .setlistavecininoduri (new list {..} etc
-            //la fel setlistavecinihexuri
-            //necesar creeare setters la listele astea de vecini
-        }
-
-        private void makePorts()
-        {
-            //generare porturi (hardcodate), randomizare doar ce trade au
-        }
 
     }
 }
