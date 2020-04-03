@@ -6,8 +6,21 @@ namespace Catanv3
 {
     class Map
     {
-        public List<Node> nodes { get; set; }
-        public List<Hex> hexes { get; set; }
+        private List<Node> nodes = new List<Node>();
+
+        public List<Node> Nodes
+        {
+            get
+            {
+                return this.nodes;
+            }
+        }
+        private List<Hex> hexes = new List<Hex>();
+
+        public List<Hex> Hexes
+        {
+            get { return this.hexes; }
+        }
 
         public Map()
         {
