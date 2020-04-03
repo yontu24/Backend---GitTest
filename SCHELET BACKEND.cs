@@ -10,6 +10,7 @@ namespace schelet_backend
     {
         static void Main(string[] args)
         {
+            Map map = new Map();
         }
     }
 
@@ -56,7 +57,7 @@ namespace schelet_backend
         public Player playerSettled;
         public Settlements settlementType { get; set; }
 
-        
+
 
         public Node(int id)
         {
@@ -73,7 +74,7 @@ namespace schelet_backend
         public int number { get; set; }
         public bool hasRobber { get; set; }
         public List<Node> nodeNeighbors { get; set; }
-      //public List<Hex> hexNeighbors { get; set; } 
+        //public List<Hex> hexNeighbors { get; set; } 
 
 
         public Hex(int id, Resources resource, int number)
@@ -110,7 +111,7 @@ namespace schelet_backend
         private void initNodes()
         {
             //loop 1..54 generare cu constructorul doar cu id, restul se intampla in connect
-            for(int i = 1; i <= 54; i++)
+            for (int i = 1; i <= 54; i++)
             {
                 Node item = new Node(i);
                 nodes.Add(item);
@@ -124,83 +125,144 @@ namespace schelet_backend
             //genererare RELEVANTA, CU CAP a resursa, numar -> apelare constructor cu toate
 
             //for loop 1..18 hexurile cu ocean de pe exterior -> folosire constructor doar cu id
-            
+
             int clay = 0, wood = 0, wheat = 0, sheep = 0, stone = 0, desert = 0;
-            int[] tokens = new int[12];
-            
+            int[] tokens = new int[13];
+
             tokens[2] = 1;
             tokens[12] = 1;
 
-            for(int i = 2; i <= 12; i++)
+            for (int i = 2; i <= 12; i++)
             {
                 tokens[i] = 2;
             }
 
-            int rand = Random.Range(2, 13);
-            int randomToken = tokens[rand];
-            tokens[rand]--;
+            Random rand = new Random();
+
+            int ind = rand.Next(2, 13);
+            int randomToken = tokens[ind];
+            tokens[ind]--;
 
             //Hex hexItem = new Hex(0, Resources.None, 0);
 
             for (int i = 1; i <= 19; i++)
             {
-                
-                var values = Enum.GetValues(typeof(Resources));
-                Resources randomResource = (Resources)values[Random.Range(0, values.Length)];
 
-               
-                while(randomToken == 0)
+                //var values = Enum.GetValues(typeof(Resources));
+                List<String> resources = new List<String>() { "Wheat", "Sheep", "Wood", "Clay", "Desert" };
+
+                String randomResource = resources[rand.Next(0, resources.Count)];
+
+                while (randomToken == 0)
                 {
-                    rand = Random.Range(2, 13);
-                    randomToken = tokens[rand];
-                 
-                }
-                tokens[rand]--;
+                    ind = rand.Next(2, 13);
+                    randomToken = tokens[ind];
 
-                switch (randomResource)
+                }
+                tokens[ind]--;
+
+                bool generated = false;
+
+                while (!generated)
                 {
-                    case Resources.Clay: if(++clay < (int)Resources.Clay)
-                        {   
-                        
-                            Hex hexItem = new Hex(i, randomResource, randomToken);
-                            
-                        }
+                    switch (randomResource)
+                    {
+                        case "Clay":
+                            if (++clay < (int)Resources.Clay)
+                            {
+                                Hex hexItem = new Hex(i, Resources.Clay, randomToken);
+                                generated = true;
+                            }
+                            else
+                            {
+                                randomResource = resources[rand.Next(0, resources.Count)];
+                            }
+                            break;
 
-                    case Resources.Wheat:
-                        if (++wheat < (int)Resources.Wheat)
-                        {
-                            Hex hexItem = new Hex(i, randomResource, randomToken);
-                        }
+                        case "Wheat":
+                            if (++wheat < (int)Resources.Wheat)
+                            {
+                                Hex hexItem = new Hex(i, Resources.Wheat, randomToken);
+                                generated = true;
+                            }
+                            else
+                            {
+                                randomResource = resources[rand.Next(0, resources.Count)];
+                            }
+                            break;
 
-                    case Resources.Wood:
-                        if (++wood < (int)Resources.Wood)
-                        {
-                            Hex hexItem = new Hex(i, randomResource, randomToken);
-                        }
 
-                    case Resources.Stone:
-                        if (++stone < (int)Resources.Stone)
-                        {
-                            Hex hexItem = new Hex(i, randomResource, randomToken);
-                        }
+                        case "Wood":
+                            if (++wood < (int)Resources.Wood)
+                            {
+                                Hex hexItem = new Hex(i, Resources.Wood, randomToken);
+                                generated = true;
+                            }
+                            else
+                            {
+                                randomResource = resources[rand.Next(0, resources.Count)];
+                            }
+                            break;
 
-                    case Resources.Sheep:
-                        if (++sheep < (int)Resources.Sheep)
-                        {
-                            Hex hexItem = new Hex(i, randomResource, randomToken);
-                        }
-                    case Resources.Desert:
-                        if (++desert < (int)Resources.Desert)
-                        {
-                            Hex hexItem = new Hex(i, randomResource, randomToken);
-                        }
+                        case "Stone":
+                            if (++stone < (int)Resources.Stone)
+                            {
+                                Hex hexItem = new Hex(i, Resources.Stone, randomToken);
+                                generated = true;
+                            }
+                            else
+                            {
+                                randomResource = resources[rand.Next(0, resources.Count)];
+                            }
+                            break;
+
+                        case "Sheep":
+                            if (++sheep < (int)Resources.Sheep)
+                            {
+                                Hex hexItem = new Hex(i, Resources.Sheep, randomToken);
+                                generated = true;
+                            }
+                            else
+                            {
+                                randomResource = resources[rand.Next(0, resources.Count)];
+                            }
+                            break;
+
+                        case "Desert":
+                            if (++desert < (int)Resources.Desert)
+                            {
+                                Hex hexItem = new Hex(i, Resources.Desert, randomToken);
+                                generated = true;
+                            }
+                            else
+                            {
+                                randomResource = resources[rand.Next(0, resources.Count)];
+                            }
+                            break;
+
+                        default:
+                            Console.WriteLine("eraore");
+                            break;
+                    }
                 }
-             
+
             }
 
-            foreach(Hex item in hexes)
+
+            //oceane exterioare
+            for (int i = 1; i <= 18; i++)
             {
-                if(item.number == 6 || item.number == 8)
+                hexes.Add(new Hex(0 - i));
+            }
+
+            foreach (Hex hex in hexes)
+            {
+                Console.WriteLine(hex);
+            }
+
+            foreach (Hex item in hexes)
+            {
+                if (item.number == 6 || item.number == 8)
                 {
 
                 }
@@ -278,7 +340,33 @@ namespace schelet_backend
         public bool hasLongestRoad;
 
 
+        public int knightCardsLeft { get; set; }
+        public int victoryPointCardsLeft { get; set; }
+        public int roadBuildingCardsLeft { get; set; }
+        public int yearOfPlentyCardsLeft { get; set; }
+        public int monopolyCardsLeft { get; set; }
 
+
+        public void useKnightCard()
+        {
+            //
+        }
+
+        public void useRoadBuildingCard()
+        {
+            //
+        }
+
+        public void useYearOfPlentyCard()
+        {
+            //
+        }
+
+        public void useMonopolyCard()
+        {
+            //
+        }
 
     }
+
 }
