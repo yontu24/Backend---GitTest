@@ -95,11 +95,10 @@ namespace Catan
                 }
                 else
                 {
-                    hexes[i].Number = 7;
-                    hexes[i].HasRobber = true;
+                    hexes[i+1].Number = 7;
+                    hexes[i+1].HasRobber = true;
                 }
             }
-
 
             List<int> toPlace = new List<int>() { 6, 6, 8, 8 };
             Random rnd = new Random();
