@@ -18,19 +18,19 @@ namespace Catan
             initHexes(); // CREATES and ADDS to list HEXES
             initNodes(); //nodes.RemoveAt(0);
 
-            addHexNeighborsToHexes();
-            addNodeNeighborsToHexes();
-            generateHexDetails();
+            addHexNeighborsToHexes();  //connect hexes to other hexes
+            addNodeNeighborsToHexes(); //connect hexes to nodes
+            generateHexDetails();      //generate resources and dice numbers of each hex
             foreach (Hex hex in hexes) { Console.WriteLine(hex.ToString()); }
 
-            addHexNeighborsToNodes();
-            addNodeNeighborsToNodes();
-            addPortsToNodes();
+            addHexNeighborsToNodes();  //connect nodes to hexes
+            addNodeNeighborsToNodes(); //connect nodes to nodes
+            addPortsToNodes();         //add ports
             foreach (Node node in nodes) { Console.WriteLine(node.ToString()); }
         }
 
-        // METHODS
-        //create all new nodes, add to list
+
+        
         private void initNodes()
         {
             //loop 1..54 generare cu constructorul doar cu id, restul se intampla in connect
@@ -55,6 +55,7 @@ namespace Catan
                 hexes.Add(hex);
             }
         }
+
 
         private void generateHexDetails()
         {

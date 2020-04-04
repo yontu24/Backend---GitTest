@@ -10,7 +10,13 @@ namespace Catan
     {
         static void Main(string[] args)
         {
-            Map map = new Map();
+            List<Player> players = new List<Player>() {new Player("player1"), new Player("player2")};
+            GameState gs = new GameState(players);
+
+            foreach (Player player in gs.Players)
+            {
+                Console.WriteLine(player.ToString());
+            }
         }
     }
 }

@@ -6,17 +6,40 @@ namespace Catan
 {
     class GameState
     {
-        private Map map = new Map();
+        private Map map;
+        private List<Player> players = new List<Player>();
+
         private int knightCardsLeft;
         private int victoryPointCardsLeft;
         private int roadBuildingCardsLeft;
         private int yearOfPlentyCardsLeft;
         private int monopolyCardsLeft;
-        private List<Player> players = new List<Player>();
-        private Player longestRoadPlayer = new Player();
+
+        //private int noOfPlayers;
 
         // CONSTRUCTOR
-        public GameState(Map map, List<Player> players) { this.map = map; this.players = players; } //initializare nr carti ramase cu cate carti sunt in pachet initia
+
+        public GameState() {}
+
+        public GameState(List<Player> players)
+        {
+            if (players.Count > 4 || players.Count < 3)
+            {
+                throw new System.ArgumentException("PLAYER NUMBER MUST BE 3 OR 4", "players.Count");
+            }
+
+            map = new Map();
+            this.players = players;
+            this.knightCardsLeft = 14;
+            this.victoryPointCardsLeft = 5;
+            this.roadBuildingCardsLeft = 2;
+            this.yearOfPlentyCardsLeft = 2;
+            this.monopolyCardsLeft = 2;
+            Console.WriteLine("am ajuns aici");
+        } //initializare nr carti ramase cu cate carti sunt in pachet initia
+
+
+
 
         // GETTERS AND SETTERS
         public Map Map { get{return this.map;} }
@@ -26,6 +49,6 @@ namespace Catan
         public int YearOfPlentyCardsLeft { get{return this.yearOfPlentyCardsLeft;} set{this.yearOfPlentyCardsLeft = value;} }
         public int MonopolyCardsLefts { get{return this.monopolyCardsLeft;} set{this.monopolyCardsLeft=value;} }
         public List<Player> Players { get {return this.players;} set{this.players = value;} }
-        public Player LongestRoadPlayer { get{return this.longestRoadPlayer;} set{this.longestRoadPlayer = value;} }
+        //public int NoOfPlayers {get {return this.noOfPlayers;}  set {this.noOfPlayers = value;} }
     }
 }

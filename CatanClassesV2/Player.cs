@@ -13,11 +13,11 @@ namespace Catan
         private List<Road> allRoads = new List<Road>();
         private List<Node> settledNodes = new List<Node>();
 
-        private int wheat;
-        private int sheep;
-        private int clay;
-        private int stone;
-        private int wood;
+        private int wheatQty;
+        private int sheepQty;
+        private int clayQty;
+        private int stoneQty;
+        private int woodQty;
 
         private int villagesLeft;
         private int citiesLeft;
@@ -33,6 +33,38 @@ namespace Catan
         private bool hasLongestRoad;
 
         // CONSTRUCTOR 
+
+        public Player() {}
+
+        public Player(string name)
+        {
+            this.name = name;
+            this.points = 0;
+
+            this.wheatQty = 0;
+            this.sheepQty = 0;
+            this.clayQty = 0;
+            this.stoneQty = 0;
+            this.woodQty = 0;
+
+            this.villagesLeft = 5;
+            this.citiesLeft = 5;
+            this.roadsLeft = 15;
+
+            this.knightCardsLeft = 0;
+            this.victoryPointCardsLeft = 0;
+            this.roadBuildingCardsLeft = 0;
+            this.yearOfPlentyCardsLeft = 0;
+            this.monopolyCardsLeft = 0;
+
+            this.soldierCardsUsed = 0;
+            this.hasLongestRoad = false;
+        }
+
+        public override string ToString()
+        {
+            return "Player name: " + name; 
+        }
 
         // METHODS
         public void useKnightCard()
@@ -63,11 +95,11 @@ namespace Catan
         public List<Road> AllRoads { get{return this.allRoads;} set { this.allRoads = value; } }
         public List<Node> SettledNodes { get{return this.settledNodes;} set { this.settledNodes = value; } }
 
-        public int Wheat { get{return this.wheat;} set{this.wheat = value;} }
-        public int Sheep { get{return this.sheep;} set{this.sheep = value;} }
-        public int Clay { get{return this.clay; } set{this.clay = value;} }
-        public int Stone { get{return this.stone;} set{this.stone = value;} }
-        public int Wood { get{return this.wood;} set{this.wood = value;}}
+        public int WheatQty { get{return this.wheatQty;} set{this.wheatQty = value;} }
+        public int SheepQty { get{return this.sheepQty;} set{this.sheepQty = value;} }
+        public int ClayQty { get{return this.clayQty; } set{this.clayQty = value;} }
+        public int StoneQty { get{return this.stoneQty;} set{this.stoneQty = value;} }
+        public int WoodQty { get{return this.woodQty;} set{this.woodQty = value;}}
 
         public int VillagesLeft { get{return this.villagesLeft;} set{this.villagesLeft = value;} }
         public int CitiesLeft { get{return this.citiesLeft;} set{this.citiesLeft = value;} }
