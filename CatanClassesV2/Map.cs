@@ -275,7 +275,7 @@ namespace Catan
         {
             nodes[1].NodeNeighbors = new List<Node> { nodes[2], nodes[9] };
             nodes[2].NodeNeighbors = new List<Node> { nodes[1], nodes[3] };
-            nodes[3].NodeNeighbors = new List<Node> { nodes[1], nodes[4], nodes[11] };
+            nodes[3].NodeNeighbors = new List<Node> { nodes[2], nodes[4], nodes[11] };
             nodes[4].NodeNeighbors = new List<Node> { nodes[5], nodes[3] };
             nodes[5].NodeNeighbors = new List<Node> { nodes[6], nodes[13], nodes[4] };
             nodes[6].NodeNeighbors = new List<Node> { nodes[5], nodes[7] };
