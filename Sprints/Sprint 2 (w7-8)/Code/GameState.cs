@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Catan
 {
-    class GameState
+    public class GameState
     {
         private Map map;
         private List<Player> players = new List<Player>();
@@ -36,39 +36,7 @@ namespace Catan
             this.yearOfPlentyCardsLeft = 2;
             this.monopolyCardsLeft = 2;
             Console.WriteLine("am ajuns aici");
-
-
-             players = Shuffler.Shuffle(players);
-
-            Queue<Player> playerOrder = new Queue<Player>();
-
-            foreach (Player player in players)
-            {
-                playerOrder.Enqueue(player);
-            }
-
-           
-
-            while (true)
-            {
-                foreach (Player player in playerOrder)
-                {
-                    Tour tour = new Tour(player, players);
-                    
-                }
-
-                break;
-            }
-
-        }
-
-
-        
-
-
-
-
-
+        } //initializare nr carti ramase cu cate carti sunt in pachet initia
 
 
 

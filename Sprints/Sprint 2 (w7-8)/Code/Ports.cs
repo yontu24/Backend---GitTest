@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Catan
 {
-    enum Ports
+    public enum Ports
     {
         Wheat,
         Sheep,

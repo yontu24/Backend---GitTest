@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Catan
 {
-    enum Resources
+    public enum Resources
         {
             Wheat,
             Sheep,

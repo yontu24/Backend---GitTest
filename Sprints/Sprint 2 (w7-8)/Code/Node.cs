@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Catan
 {
-    class Node
+    public class Node
     {
         private int id;
         private List<Node> nodeNeighbors = new List<Node>();
@@ -46,7 +46,24 @@ namespace Catan
                 final.Append(", Port: " + PortType);
             //final.Append(", HasPlayer: " + HasPlayer);
             //final.Append(", HasSettlement: " + HasSettlement);
+
+            if (hasPlayer == true)
+                final.Append(", Settled by player: " + playerSettled.Name + " with a " + settlementType.ToString());
             return final.ToString();
+        }
+
+        public void SettlePlayer(Player player, Settlements type)
+        {
+            if (this.hasPlayer == false && type == Settlements.Village)
+            {
+                this.hasPlayer = true;
+                this.playerSettled = player;
+                this.settlementType = type;
+            }
+            else if (this.hasPlayer == true && player == this.playerSettled && type == Settlements.City)
+            {
+                this.settlementType = type;
+            }
         }
 
         // GETTERS AND SETTERS

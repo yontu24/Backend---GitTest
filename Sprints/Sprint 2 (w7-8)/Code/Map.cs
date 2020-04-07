@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Catan
 {
-    class Map
+    public class Map
     {
         private List<Node> nodes = new List<Node>();
         private List<Hex> hexes = new List<Hex>();
@@ -21,12 +21,12 @@ namespace Catan
             addHexNeighborsToHexes();  //connect hexes to other hexes
             addNodeNeighborsToHexes(); //connect hexes to nodes
             generateHexDetails();      //generate resources and dice numbers of each hex
-            foreach (Hex hex in hexes) { Console.WriteLine(hex.ToString()); }
+            //foreach (Hex hex in hexes) { Console.WriteLine(hex.ToString()); }
 
             addHexNeighborsToNodes();  //connect nodes to hexes
             addNodeNeighborsToNodes(); //connect nodes to nodes
             addPortsToNodes();         //add ports
-            foreach (Node node in nodes) { Console.WriteLine(node.ToString()); }
+            //foreach (Node node in nodes) { Console.WriteLine(node.ToString()); }
         }
 
 
@@ -71,14 +71,14 @@ namespace Catan
             List<Resources> shuffledTiles = Shuffler.Shuffle(resourceTiles);
             foreach (Resources tile in shuffledTiles)
             {
-                Console.WriteLine(tile.ToString());
+                //Console.WriteLine(tile.ToString());
             }
             List<int> shuffledNumberPiecesNo68 = Shuffler.Shuffle(numberPieces).FindAll(e => e != 6 && e != 8);
             for (int i = 0; i < shuffledNumberPiecesNo68.Count; i++)
             {
-                Console.Write(shuffledNumberPiecesNo68[i].ToString() + " ");
+                //Console.Write(shuffledNumberPiecesNo68[i].ToString() + " ");
             }
-            Console.WriteLine();
+            //Console.WriteLine();
 
             //tiles that are not deserts will have numbers on them
             List<Hex> possibilities = new List<Hex>();
@@ -144,7 +144,7 @@ namespace Catan
             }
             for (int i = 0; i < permutation.Count(); i++)
             {
-                Console.WriteLine(permutation[i]);
+                //Console.WriteLine(permutation[i]);
             }
 
             int poz = 0;

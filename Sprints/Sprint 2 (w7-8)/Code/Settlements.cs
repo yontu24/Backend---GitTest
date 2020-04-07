@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Catan
 {
-    enum Settlements
+    public enum Settlements
     {
         Village,
         City

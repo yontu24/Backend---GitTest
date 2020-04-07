@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Catan
 {
-    class Player
+    public class Player
     {
         private string name;
         private int id;
@@ -64,6 +64,11 @@ namespace Catan
         public override string ToString()
         {
             return "Player name: " + name; 
+        }
+
+        public void PrintResources()
+        {
+            Console.WriteLine("Player has : \nWheat: " + wheatQty + "\nWood: " + woodQty + "\nStone: " + stoneQty + "\nClay: " + clayQty + "\nSheep: " + sheepQty);
         }
 
         // METHODS

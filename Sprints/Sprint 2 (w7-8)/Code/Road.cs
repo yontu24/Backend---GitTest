@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Catan
 {
-    class Road
+    public class Road
     {
         private Node node1;
         private Node node2;

@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Catan
 {
-    class Hex
+    public class Hex
     {
         private int id;
         private int number;
@@ -58,6 +59,11 @@ namespace Catan
 
             final.Append(", HasRobber: " + HasRobber);
             return final.ToString();
+        }
+
+        public List<Node> SettledNeighborNodes()
+        {
+            return this.NodeNeighbors.Where(node => node.HasPlayer == true).ToList();
         }
 
         // GETTERS AND SETTERS
