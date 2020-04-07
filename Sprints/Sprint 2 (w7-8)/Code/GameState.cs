@@ -36,7 +36,39 @@ namespace Catan
             this.yearOfPlentyCardsLeft = 2;
             this.monopolyCardsLeft = 2;
             Console.WriteLine("am ajuns aici");
-        } //initializare nr carti ramase cu cate carti sunt in pachet initia
+
+
+             players = Shuffler.Shuffle(players);
+
+            Queue<Player> playerOrder = new Queue<Player>();
+
+            foreach (Player player in players)
+            {
+                playerOrder.Enqueue(player);
+            }
+
+           
+
+            while (true)
+            {
+                foreach (Player player in playerOrder)
+                {
+                    Tour tour = new Tour(player, players);
+                    
+                }
+
+                break;
+            }
+
+        }
+
+
+        
+
+
+
+
+
 
 
 
