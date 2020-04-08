@@ -59,9 +59,19 @@ namespace Catan
 
                 if (totalResourceCards > 7)
                 {
-                    //
+                    List<Resources> discarded = new List<Resources>();
+                    //somehow show to the player on the GUI that they need to discard and get the chosen discard resources as input
+                    //probably make sure that on the GUI the player can't select more than what he has (e.g. can't choose to discard 4 wheat if he's only got 3)
+                    player.Discard(discarded);
                 }
             }
+
+
+            Hex newRobberHex = map.Hexes[0]; //TEMP - get input from GUI for what hex the current player has chosen to place the robber on
+            map.MoveRobber(newRobberHex);
+            
+            //implement stealing
+
         }
     }
 }

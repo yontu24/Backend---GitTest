@@ -329,6 +329,19 @@ namespace Catan
             nodes[54].NodeNeighbors = new List<Node> { nodes[46], nodes[53] };
         }
         
+        public void MoveRobber(Hex hex)
+        {
+            foreach (Hex ihex in hexes)
+            {
+                if (ihex.HasRobber == true)
+                {
+                    ihex.HasRobber = false;
+                    break;
+                }
+            }
+
+            hex.HasRobber = true;
+        }
 
         //populate lists of neighbors in each
 

@@ -71,6 +71,31 @@ namespace Catan
             Console.WriteLine("Player has : \nWheat: " + wheatQty + "\nWood: " + woodQty + "\nStone: " + stoneQty + "\nClay: " + clayQty + "\nSheep: " + sheepQty);
         }
 
+        public void Discard(List<Resources> resources)
+        {
+            foreach (Resources resource in resources)
+            {
+                switch(resource)
+                {
+                    case Resources.Clay:
+                        clayQty--;
+                        break;
+                    case Resources.Sheep:
+                        sheepQty--;
+                        break;
+                    case Resources.Stone:
+                        stoneQty--;
+                        break;
+                    case Resources.Wheat:
+                        wheatQty--;
+                        break;
+                    case Resources.Wood:
+                        woodQty--;
+                        break;
+                }
+            }
+        }
+
         // METHODS
         public void useKnightCard()
         {
